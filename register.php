@@ -84,16 +84,16 @@ if (isset($_POST['submit'])) {
     }
 }
 
-print '<pre>';
-print_r($errors);
-print '</pre>';
+// print '<pre>';
+// print_r($errors);
+// print '</pre>';
 
 require('head.inc.php');
 ?>
 
 <body>
     <!-- Section: Design Block -->
-    <section class="background-radial-gradient overflow-hidden">
+    <section class="vh-100 background-radial-gradient overflow-scroll">
         <style>
             .background-radial-gradient {
                 background-color: hsl(218, 41%, 15%);
@@ -204,6 +204,10 @@ require('head.inc.php');
                                 <button type="submit" value="submit" name="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">
                                     Sign up
                                 </button>
+                                <div>
+                                    <p class="mb-0">Already have an account? <a href="login.php" class="fw-bold" style="color: hsl(218, 81%, 75%)">Login</a>
+                                    </p>
+                                </div>
                             </form>
                         </div>
                     </div>
