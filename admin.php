@@ -16,7 +16,7 @@ require('head.inc.php');
     <!-- TODO : welcome $firstname -->
     <h1>Articles overview</h1>
     <!-- TODO a to form.php -->
-    <a href="#"><button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-circle"></i> Add new item</button></a>
+    <a href="form.php"><button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-circle"></i> Add new item</button></a>
     <table class="table">
         <thead>
             <tr>
