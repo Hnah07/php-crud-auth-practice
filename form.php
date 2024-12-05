@@ -1,6 +1,6 @@
 <?php
 require('functions.inc.php');
-// $authors = getAuthors();
+$users = getUsers();
 
 $errors = [];
 $submitted = false;
@@ -17,38 +17,38 @@ if (@$_POST['submit']) { // is "submit" als key aanwezig in de $_POST array
     // 1: alle default values declareren
     $title = "";
     $body = "";
-    $author_id = null;
+    $user_id = null;
     $status = 0;
     $datum = null;
 
     // 2: validatie uitvoeren
     if (!isset($_POST['title'])) { // zit title in mijn POST?
-        $errors[] = "title field missing...";
+        $errors[] = "Title field missing...";
     } else {
         if (strlen($_POST['title']) == 0) { // is het title field ingevuld?
-            $errors[] = "title field can not be empty";
+            $errors[] = "Title field can not be empty";
         } else { // Er waren geen problemen met de waarde van title
             $title = $_POST['title'];
         }
     }
 
     if (!isset($_POST['body'])) { // zit body in mijn POST?
-        $errors[] = "body field missing...";
+        $errors[] = "Body field missing...";
     } else {
         $body = $_POST['body'];
     }
 
-    if (!isset($_POST['author'])) { // zit author in mijn POST?
-        $errors[] = "author field missing...";
+    if (!isset($_POST['user'])) { // zit user in mijn POST?
+        $errors[] = "User field missing...";
     } else {
-        if ((int)$_POST['author'] === 0) {
-            $_POST['author'] = null;
+        if ((int)$_POST['user'] === 0) {
+            $_POST['user'] = null;
         }
 
-        if (!isset($authors[$_POST['author']]) && $_POST['author'] !== null) { // is author id niet geldig?
-            $errors[] = "Author ID is not valid.";
+        if (!isset($users[$_POST['user']]) && $_POST['user'] !== null) { // is user id niet geldig?
+            $errors[] = "User ID is not valid.";
         } else {
-            $author_id = $_POST['author'];
+            $user_id = $_POST['user'];
         }
     }
 
@@ -62,8 +62,8 @@ if (@$_POST['submit']) { // is "submit" als key aanwezig in de $_POST array
 
     // 3: indien validatie ok: insert into db
     if (count($errors) == 0) { // er werden geen fouten geregistreerd tijdens validatie
-        $return = insertNewsItem($title, $body, $author_id, $status, $datum);
-        header("Location: index.php?message=Record werd toegevoegd...");
+        $return = insertArticleItem($title, $body, $user_id, $status, $datum);
+        header("Location: admin.php?message=Record werd toegevoegd...");
         exit;
     }
 }
@@ -118,10 +118,10 @@ if (@$_POST['submit']) { // is "submit" als key aanwezig in de $_POST array
                 </div>
 
                 <div class="mb-3">
-                    <select id="author" name="author" class="form-select" aria-label="Author">
-                        <option <?= @$author_id == null ? 'selected' : ''; ?> value="0">Please select an author</option>
-                        <?php foreach ($authors as $index => $author): ?>
-                            <option value="<?= $index; ?>" <?= $index == @$author_id ? 'selected' : ''; ?>><?= $author; ?></option>
+                    <select id="user" name="user" class="form-select" aria-label="User">
+                        <option <?= @$user_id == null ? 'selected' : ''; ?> value="0">Please select a user</option>
+                        <?php foreach ($users as $index => $user): ?>
+                            <option value="<?= $index; ?>" <?= $index == @$user_id ? 'selected' : ''; ?>><?= $user['firstname'] . " ",  $user['lastname']; ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
