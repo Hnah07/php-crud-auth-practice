@@ -34,7 +34,7 @@ require('head.inc.php');
                     <th scope="row"><?= $article['id']; ?></th>
                     <td><?= $article['title']; ?></td>
                     <td><?= $article['firstname'] . " " . $article['lastname']; ?></td>
-                    <td><?= $article['publication_date']; ?></td>
+                    <td><?= date('j M Y', strtotime($article['publication_date'])); ?></td>
                     <td><button class="<?= $article['status'] ? 'btn btn-success' : 'btn btn-danger'; ?>" style="cursor: default;"><?= $article['status'] ? 'published' : 'unpublished'; ?></button></td>
                     <td>
                         <a href="index.php">
