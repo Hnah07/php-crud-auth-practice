@@ -32,12 +32,12 @@ require('head.inc.php');
             <?php foreach ($articles as $article): ?>
                 <tr>
                     <th scope="row"><?= $article['id']; ?></th>
-                    <td><?= $article['title']; ?></td>
+                    <td><?= mb_strimwidth($article['title'], 0, 25, "..."); ?></td>
                     <td><?= $article['firstname'] . " " . $article['lastname']; ?></td>
                     <td><?= date('j M Y', strtotime($article['publication_date'])); ?></td>
                     <td><button class="<?= $article['status'] ? 'btn btn-success' : 'btn btn-danger'; ?>" style="cursor: default;"><?= $article['status'] ? 'published' : 'unpublished'; ?></button></td>
                     <td>
-                        <a href="index.php">
+                        <a href="#">
                             <button type="button" class="btn btn-outline-primary">View</button></a>
                         <a href="#">
                             <button type="button" class="btn btn-outline-warning">Edit</button></a>
