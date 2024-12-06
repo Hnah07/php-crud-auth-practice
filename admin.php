@@ -9,6 +9,16 @@ $articles = getArticles();
 
 require('head.inc.php');
 ?>
+<style>
+    a {
+        text-decoration: none;
+        color: inherit;
+
+        &:hover {
+            color: blue;
+        }
+    }
+</style>
 <header class="text-end m-5">
     <a href="logout.php" button" class="btn btn-outline-danger btn-lg">Log out</a>
 </header>
@@ -21,10 +31,10 @@ require('head.inc.php');
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Title</th>
-                <th scope="col">User</th>
-                <th scope="col">Publication date</th>
-                <th scope="col">Status</th>
+                <th scope="col"><a href="#">Title <i class="bi bi-arrow-down-up"></i></a></th>
+                <th scope="col"><a href="#">User <i class="bi bi-arrow-down-up"></i></a></th>
+                <th scope="col"><a href="#">Publication date <i class="bi bi-arrow-down-up"></i></a></th>
+                <th scope="col"><a href="#">Status <i class="bi bi-arrow-down-up"></i></a></th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
