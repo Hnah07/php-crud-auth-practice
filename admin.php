@@ -2,10 +2,25 @@
 require('functions.inc.php');
 $pageTitle = "admin";
 requiredLoggedIn();
-
-
-
 $articles = getArticles();
+
+$sort = 'title';
+$direction = 'ASC';
+
+if (in_array(@$_GET['sort'], ['title', 'firstname', 'publication_date', 'status'])) {
+    $sort = $_GET['sort'];
+}
+
+if (in_array(@$_GET['dir'], ['down'])) {
+    $direction = 'DESC';
+}
+
+$articles = sortArticles($sort, $direction);
+
+// print '<pre>';
+// var_dump($sortArticles);
+// print '</pre>';
+
 
 require('head.inc.php');
 ?>
@@ -31,10 +46,10 @@ require('head.inc.php');
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col"><a href="#">Title <i class="bi bi-arrow-down-up"></i></a></th>
-                <th scope="col"><a href="#">User <i class="bi bi-arrow-down-up"></i></a></th>
-                <th scope="col"><a href="#">Publication date <i class="bi bi-arrow-down-up"></i></a></th>
-                <th scope="col"><a href="#">Status <i class="bi bi-arrow-down-up"></i></a></th>
+                <th scope="col"><a href="?sort=title&dir=<?= ($sort == 'title' && $direction == 'ASC' ? 'down' : 'up'); ?>">Title <i class="bi bi-arrow-down-up"></i></a></th>
+                <th scope="col"><a href="?sort=firstname&dir=<?= ($sort == 'firstname' && $direction == 'ASC' ? 'down' : 'up'); ?>">User <i class="bi bi-arrow-down-up"></i></a></th>
+                <th scope="col"><a href="?sort=publication_date&dir=<?= ($sort == 'publication_date' && $direction == 'ASC' ? 'down' : 'up'); ?>">Publication date <i class="bi bi-arrow-down-up"></i></a></th>
+                <th scope="col"><a href="?sort=status&dir=<?= ($sort == 'status' && $direction == 'ASC' ? 'down' : 'up'); ?>">Status <i class="bi bi-arrow-down-up"></i></a></th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>

@@ -134,3 +134,14 @@ function insertArticleItem(String $title, String $body, int $user_id = null, int
     ]);
     return $db->lastInsertId();
 }
+
+function sortArticles(String $sort, String $direction)
+{
+    $db = connectToDB();
+    $sql = "SELECT articles.*, users.firstname, users.lastname FROM articles 
+    LEFT JOIN users ON articles.user_id = users.id
+    ORDER BY $sort $direction";
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
