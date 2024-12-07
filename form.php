@@ -46,7 +46,7 @@ if (@$_POST['submit']) { // is "submit" als key aanwezig in de $_POST array
             $_POST['user'] = null;
         }
 
-        if (!isset($users[$_POST['user']]) && $user['id'] !== null) { // is user id niet geldig?
+        if (!isset($users[$_POST['user']]) && $_POST['user'] == null) { // is user id niet geldig?
             $errors[] = "User ID is not valid.";
         } else {
             $user_id = $_POST['user'];
@@ -57,10 +57,11 @@ if (@$_POST['submit']) { // is "submit" als key aanwezig in de $_POST array
         $status = 1;
     }
 
-    if (isset($_POST['datum'])) {
+    if (isset($_POST['datum']) && !empty($_POST['datum'])) {
         $datum = $_POST['datum'] . ' 00:00:00';
+    } else {
+        $errors[] = "Select publication date.";
     }
-
     // 3: indien validatie ok: insert into db
     if (count($errors) == 0) { // er werden geen fouten geregistreerd tijdens validatie
         $return = insertArticleItem($title, $body, $user_id, $status, $datum);
@@ -70,7 +71,7 @@ if (@$_POST['submit']) { // is "submit" als key aanwezig in de $_POST array
 }
 
 // print '<pre>';
-// print_r($users);
+// print_r($_POST);
 // print '</pre>';
 
 require('head.inc.php');

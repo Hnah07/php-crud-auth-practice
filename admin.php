@@ -2,7 +2,6 @@
 require('functions.inc.php');
 $pageTitle = "admin";
 requiredLoggedIn();
-$articles = getArticles();
 
 $sort = 'title';
 $direction = 'ASC';
@@ -16,6 +15,7 @@ if (in_array(@$_GET['dir'], ['down'])) {
 }
 
 $articles = sortArticles($sort, $direction);
+$articles = getArticles();
 
 // print '<pre>';
 // var_dump($sortArticles);

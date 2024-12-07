@@ -120,7 +120,7 @@ function getUsers(): array
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function insertArticleItem(String $title, String $body, int $user_id = null, int $status = 1, String $publication_date = null): bool|int
+function insertArticleItem(String $title, String $body, int $user_id = null, int $status = 1, String $publication_date = null): bool|int|DateTime
 {
     $db = connectToDB();
     $sql = "INSERT INTO articles(title, body, user_id, status, publication_date) VALUES (:title, :body, :user_id, :status, :publication_date)";
