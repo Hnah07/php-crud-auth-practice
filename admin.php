@@ -7,7 +7,7 @@ $articles = getArticles();
 $sort = 'title';
 $direction = 'ASC';
 
-if (in_array(@$_GET['sort'], ['title', 'firstname', 'publication_date', 'status'])) {
+if (in_array(@$_GET['sort'], ['id', 'title', 'firstname', 'publication_date', 'status'])) {
     $sort = $_GET['sort'];
 }
 
@@ -45,7 +45,7 @@ require('head.inc.php');
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col"><a href="?sort=id&dir=<?= ($sort == 'id' && $direction == 'ASC' ? 'down' : 'up'); ?>"># <i class="bi bi-arrow-down-up"></i></a></th>
                 <th scope="col"><a href="?sort=title&dir=<?= ($sort == 'title' && $direction == 'ASC' ? 'down' : 'up'); ?>">Title <i class="bi bi-arrow-down-up"></i></a></th>
                 <th scope="col"><a href="?sort=firstname&dir=<?= ($sort == 'firstname' && $direction == 'ASC' ? 'down' : 'up'); ?>">User <i class="bi bi-arrow-down-up"></i></a></th>
                 <th scope="col"><a href="?sort=publication_date&dir=<?= ($sort == 'publication_date' && $direction == 'ASC' ? 'down' : 'up'); ?>">Publication date <i class="bi bi-arrow-down-up"></i></a></th>
