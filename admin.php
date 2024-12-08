@@ -14,8 +14,28 @@ if (in_array(@$_GET['dir'], ['down'])) {
     $direction = 'DESC';
 }
 
-$articles = sortArticles($sort, $direction);
 $articles = getArticles();
+$articles = sortArticles($sort, $direction);
+
+$itemsPerPage = 10;
+$start = 0;
+
+$totalAmountOfArticles = count($articles);
+$totalAmountOfPages = ceil($totalAmountOfArticles / $itemsPerPage);
+
+$currentPage = @$_GET['page'];
+$currentPage = (int)$currentPage;
+
+if ($currentPage == 0 || $currentPage > $totalAmountOfPages) {
+    $currentPage = 1;
+}
+
+$start = (($currentPage - 1) * $itemsPerPage);
+
+$stop = $start + $itemsPerPage;
+if ($stop > $totalAmountOfArticles) {
+    $stop = $totalAmountOfArticles;
+}
 
 // print '<pre>';
 // var_dump($sortArticles);
@@ -34,12 +54,17 @@ require('head.inc.php');
         }
     }
 </style>
+
 <header class="text-end m-5">
     <a href="logout.php" button" class="btn btn-outline-danger btn-lg">Log out</a>
 </header>
+
 <div class="container py-5 h-100">
     <!-- TODO : welcome $firstname -->
+    <h2 class="text-center">Total amount of posts: <?= $totalAmountOfArticles; ?></h2>
+    <h2 class="text-center">Total amount of pages: <?= $totalAmountOfPages; ?></h2>
     <h1>Articles overview</h1>
+
     <!-- TODO a to form.php -->
     <a href="form.php"><button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-circle"></i> Add new item</button></a>
     <table class="table">
@@ -54,7 +79,9 @@ require('head.inc.php');
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($articles as $article): ?>
+            <?php
+            $articles = array_slice($articles, $start, $itemsPerPage);
+            foreach ($articles as $article): ?>
                 <tr>
                     <th scope="row"><?= $article['id']; ?></th>
                     <td><?= mb_strimwidth($article['title'], 0, 25, "..."); ?></td>
@@ -72,4 +99,29 @@ require('head.inc.php');
                 </tr>
             <?php endforeach; ?>
         </tbody>
+    </table>
+</div>
+
+<div class="d-flex justify-content-end" style="margin-right: 3rem;">
+    <ul class="pagination">
+        <?php if ($currentPage > 1): ?>
+            <li class="page-item">
+                <a class="page-link" href="admin.php?page=<?= $currentPage - 1 ?>&sort=<?= $sort ?>&dir=<?= $direction ?>" aria-label=" Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+        <?php endif; ?>
+        <!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+        <?php if ($currentPage < $totalAmountOfPages): ?>
+            <li class="page-item">
+                <a class="page-link" href="admin.php?page=<?= $currentPage + 1 ?>&sort=<?= $sort ?>&dir=<?= $direction ?>" aria-label=" Next">
+                    <span class="sr-only">Next</span>
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        <?php endif; ?>
+    </ul>
 </div>
