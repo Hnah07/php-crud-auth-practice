@@ -65,7 +65,12 @@ require('head.inc.php');
     <h2 class="text-center">Total amount of pages: <?= $totalAmountOfPages; ?></h2>
     <h1>Articles overview</h1>
 
-    <!-- TODO a to form.php -->
+    <?php if (isset($_GET["message"])): // zit er een message in mijn GET array? 
+    ?>
+        <div class="p-3 text-success-emphasis bg-success-subtle border border-success-subtle rounded-3">
+            <?= $_GET["message"]; ?>
+        </div>
+    <?php endif; ?>
     <a href="form.php"><button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-circle"></i> Add new item</button></a>
     <table class="table">
         <thead>
@@ -91,7 +96,7 @@ require('head.inc.php');
                     <td>
                         <a href="#">
                             <button type="button" class="btn btn-outline-primary">View</button></a>
-                        <a href="#">
+                        <a href="editform.php?id=<?= $article['id']; ?>">
                             <button type="button" class="btn btn-outline-warning">Edit</button></a>
                         <a href="#">
                             <button type="button" class="btn btn-outline-danger">Delete</button></a>

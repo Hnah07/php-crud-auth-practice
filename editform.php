@@ -1,8 +1,28 @@
 <?php
 require('functions.inc.php');
 requiredLoggedIn();
+$id = (int)@$_REQUEST['id'];
 
-$pageTitle = "Add an article";
+// er werd geen geldige waarde als ?id meegegeven
+if ($id == 0) {
+    header("Location: admin.php");
+    exit;
+}
+
+// haal het record op uit de DB
+$article = getArticleById($id);
+if ($article == false) {
+    header("Location: admin.php");
+    exit;
+}
+
+$title = $article['title'];
+$body = $article['body'];
+$user_id = $article['user_id'];
+$status = $article['status'];
+$datum = $article['publication_date'];
+
+$pageTitle = "Edit an article";
 $users = getUsers();
 
 $errors = [];
@@ -64,8 +84,8 @@ if (@$_POST['submit']) { // is "submit" als key aanwezig in de $_POST array
     }
     // 3: indien validatie ok: insert into db
     if (count($errors) == 0) { // er werden geen fouten geregistreerd tijdens validatie
-        $return = insertArticleItem($title, $body, $user_id, $status, $datum);
-        header("Location: admin.php?message=Article added...");
+        $return = updateArticleItem($id, $title, $body, $user_id, $status, $datum);
+        header("Location: admin.php?message=Record with id $id ($title) is edited...");
         exit;
     }
 }
@@ -80,7 +100,7 @@ require('head.inc.php');
 <body>
     <div class="container">
         <main class="col-md-9">
-            <h2>Add new item</h2>
+            <h2>Edit item</h2>
 
             <?php if (count($errors) > 0): ?>
                 <div class="p-3 text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-3">
@@ -99,7 +119,7 @@ require('head.inc.php');
             <?php endif; ?>
 
 
-            <form method="post" action="form.php">
+            <form method="post" action="editform.php?id=<?= $id ?>">
 
                 <div class="mb-3">
                     <label for="title" class="form-label">Title *</label>
@@ -129,7 +149,7 @@ require('head.inc.php');
                 <div class="mb-3">
                     <div class="form-check form-switch">
                         <label for="startDate">Publication date</label>
-                        <input id="startDate" name="datum" class="form-control" type="date" />
+                        <input id="startDate" name="datum" class="form-control" type="date" value="<?= substr($datum, 0, 10); ?>" />
                         <span id="startDateSelected"></span>
                     </div>
                 </div>

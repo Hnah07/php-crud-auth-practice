@@ -145,3 +145,32 @@ function sortArticles(String $sort, String $direction)
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function getArticleById(int $id): array|bool
+{
+    $sql = "SELECT * FROM articles WHERE articles.id = :id;";
+
+    $stmt = connectToDB()->prepare($sql);
+    $stmt->execute([
+        ":id" => $id
+    ]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function updateArticleItem(int $id, String $title, String $body, int $user_id, int $status, String $datum): bool|int
+{
+    $db = connectToDB();
+    $sql = "UPDATE articles 
+            SET title = :title, body = :body, user_id = :user_id, status = :status, publication_date = :publication_date, update_date = CURRENT_TIMESTAMP
+            WHERE id = :id";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([
+        ':title' => $title,
+        ':body' => $body,
+        ':user_id' => $user_id,
+        ':status' => $status,
+        ':publication_date' => $datum,
+        ':id' => $id
+    ]);
+    return $db->lastInsertId();
+}
