@@ -4,8 +4,6 @@ requiredLoggedIn();
 
 $users = getUsers();
 
-
-
 // Haal het artikel-ID op uit de URL
 $id = (int)$_GET['id'] ?? 0;
 
@@ -19,7 +17,7 @@ if ($id <= 0) {
 $article = getArticleById($id);
 
 // Controleer of het artikel bestaat
-if (!$article) {
+if (!isset($article)) {
     header("Location: admin.php?message=Article not found.");
     exit;
 }
