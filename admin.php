@@ -94,7 +94,7 @@ require('head.inc.php');
                     <td><?= date('j M Y', strtotime($article['publication_date'])); ?></td>
                     <td><button class="<?= $article['status'] ? 'btn btn-success' : 'btn btn-danger'; ?>" style="cursor: default;"><?= $article['status'] ? 'published' : 'unpublished'; ?></button></td>
                     <td>
-                        <a href="#">
+                        <a href="view.php?id=<?= $article['id']; ?>">
                             <button type="button" class="btn btn-outline-primary">View</button></a>
                         <a href="editform.php?id=<?= $article['id']; ?>">
                             <button type="button" class="btn btn-outline-warning">Edit</button></a>
