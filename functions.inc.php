@@ -174,3 +174,15 @@ function updateArticleItem(int $id, String $title, String $body, int $user_id, i
     ]);
     return $db->lastInsertId();
 }
+
+function deleteArticle(int $id)
+{
+    $db = connectToDB();
+    $sql = "DELETE FROM articles
+            WHERE id = :id";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([
+        ':id' => $id
+    ]);
+    return $db->lastInsertId();
+}

@@ -63,7 +63,7 @@ require('head.inc.php');
     <!-- TODO : welcome $firstname -->
     <h2 class="text-center">Total amount of posts: <?= $totalAmountOfArticles; ?></h2>
     <h2 class="text-center">Total amount of pages: <?= $totalAmountOfPages; ?></h2>
-    <h1>Articles overview</h1>
+    <h1 class="mt-5">Articles overview</h1>
 
     <?php if (isset($_GET["message"])): // zit er een message in mijn GET array? 
     ?>
@@ -98,8 +98,16 @@ require('head.inc.php');
                             <button type="button" class="btn btn-outline-primary">View</button></a>
                         <a href="editform.php?id=<?= $article['id']; ?>">
                             <button type="button" class="btn btn-outline-warning">Edit</button></a>
-                        <a href="#">
-                            <button type="button" class="btn btn-outline-danger">Delete</button></a>
+                        <!-- DELETE ARTICLE -->
+                        <form method="post" action="delete.php" style="display: inline;">
+                            <input type="hidden" name="id" value="<?= $article['id']; ?>">
+                            <button type="submit" class="btn btn-outline-danger"
+                                onclick="return confirm('Are you sure you want to delete this article?');">
+                                Delete
+                            </button>
+                        </form>
+
+
                     </td>
                 </tr>
             <?php endforeach; ?>
