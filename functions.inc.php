@@ -179,7 +179,7 @@ function deleteArticle(int $id)
 {
     $db = connectToDB();
     $sql = "DELETE FROM articles
-            WHERE id = :id";
+      f      WHERE id = :id";
     $stmt = $db->prepare($sql);
     $stmt->execute([
         ':id' => $id
